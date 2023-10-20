@@ -13,23 +13,7 @@ import UIKit
  3. Follow the instructions in the `NetworkManager` file.
  */
 class UsersViewController: UIViewController, UITableViewDataSource, NetworkManagerDelegate {
-    func usersRetrieved(_ users: [User]) {
-        self.users = users //
-
-               DispatchQueue.main.async {
-                   self.UITableView.reloadData()
-                   }
-        
-           }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Email", for: indexPath)
-        return cell
-    }
+   
     
     
     /**
@@ -49,12 +33,30 @@ class UsersViewController: UIViewController, UITableViewDataSource, NetworkManag
     func configureTableView() {
         UITableView.dataSource = self
         UITableView.register(UITableViewCell.self, forCellReuseIdentifier: "PersonCell")    }
+   
+    func usersRetrieved(_ users: [User]) {
+        self.users = users //
+
+               DispatchQueue.main.async {
+                   self.UITableView.reloadData()
+                   }
+        
+           }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return users.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.userReuseID, for: indexPath)
+        return cell
+    }
     /**
      6.1 Set the `NetworkManager`'s delegate property to the `UsersViewController`. Have the `UsersViewController` conform to the `NetworkManagerDelegate` protocol. Call the `NetworkManager`'s `getUsers` function. In the `usersRetrieved` function, assign the `users` property to the array we got back from the API and call `reloadData` on the table view.
      */
         
     func getUsers() {
-        
+        NetworkManager.shared.getUsers()
     }
         
     

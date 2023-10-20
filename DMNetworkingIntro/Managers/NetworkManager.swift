@@ -22,7 +22,7 @@ class NetworkManager {
     /**
      3.2 Create a variable called `delegate` of type optional `NetworkManagerDelegate`. We will be using the delegate to pass the `Users` to the `UsersViewController` once they come back from the API.
      */
-    weak var delegate: NetworkManagerDelegate?/**
+    var delegate: NetworkManagerDelegate?/**
                                                    3.3 Makes a request to the API and decode the JSON that comes back into a `UserResponse` object.
                                                    3.4 Call the `delegate`'s `usersRetrieved` function, passing the `data` array from the decoded `UserResponse`.
                                                    
