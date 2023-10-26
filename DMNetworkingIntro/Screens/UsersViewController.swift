@@ -12,7 +12,7 @@ import UIKit
  2. Follow the instructions in the `User` file.
  3. Follow the instructions in the `NetworkManager` file.
  */
-class UsersViewController: UIViewController, UITableViewDataSource, NetworkManagerDelegate {
+class UsersViewController: UIViewController, UITableViewDataSource, NetworkManagerDelegate, UITableViewDelegate {
    
     
     
@@ -20,6 +20,9 @@ class UsersViewController: UIViewController, UITableViewDataSource, NetworkManag
      4. Create a variable called `users` and set it to an empty array of `User` objects.
      */
     var users: [User] = []
+    func getUsers() {
+        NetworkManager.shared.getUsers()
+    }
     /**
      5. Connect the UITableView to the code. Create a function called `configureTableView` that configures the table view. You may find the `Constants` file helpful. Make sure to call the function in the appropriate spot.
      */
@@ -30,11 +33,13 @@ class UsersViewController: UIViewController, UITableViewDataSource, NetworkManag
         
         getUsers()
     }
+    
     func configureTableView() {
         UITableView.dataSource = self
-        UITableView.register(UITableViewCell.self, forCellReuseIdentifier: "PersonCell")    }
+        UITableView.delegate = self
+        UITableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.userReuseID)    }
    
-    func usersRetrieved(_ users: [User]) {
+    func usersRetrieved(users: [User]) {
         self.users = users //
 
                DispatchQueue.main.async {
@@ -55,9 +60,7 @@ class UsersViewController: UIViewController, UITableViewDataSource, NetworkManag
      6.1 Set the `NetworkManager`'s delegate property to the `UsersViewController`. Have the `UsersViewController` conform to the `NetworkManagerDelegate` protocol. Call the `NetworkManager`'s `getUsers` function. In the `usersRetrieved` function, assign the `users` property to the array we got back from the API and call `reloadData` on the table view.
      */
         
-    func getUsers() {
-        NetworkManager.shared.getUsers()
-    }
+    
         
     
 

@@ -11,11 +11,11 @@ import Foundation
  3.1 Create a protocol called `NetworkManagerDelegate` that contains a function called `usersRetrieved`.. This function should accept an array of `User` and should not return anything.
  */
 protocol NetworkManagerDelegate: AnyObject {
-    func usersRetrieved(_ users: [User])
+    func usersRetrieved(users: [User])
 }
 class NetworkManager {
     static let shared = NetworkManager()
-    private let baseUrl = "https://reqres.in/api/users"
+    private let baseUrl = "https://reqres.in/api/"
     
     private init() {}
     
@@ -30,8 +30,9 @@ class NetworkManager {
                                                    */
     func getUsers() {
         // 3.3 Append the "/users" endpoint to the base URL and store the result in a variable. You should end up with this String: "https://reqres.in/api/users".
+        let endpoint = baseUrl + "users"
         let urlString = "https://reqres.in/api/users"
-        
+
         // 3.3 Create a `URL` object from the String. If the `URL` is nil, break out of the function.
         guard let url = URL(string: urlString) else {
             return
@@ -57,7 +58,7 @@ class NetworkManager {
                 let userResponse = try decoder.decode(UserResponse.self, from: data)
                 
                 // 3.4 Call the `delegate`'s `usersRetrieved` function, passing the `data` array from the decoded `UserResponse`.
-                self.delegate?.usersRetrieved(userResponse.data)
+                self.delegate?.usersRetrieved(users: userResponse.data)
                 
             } catch {
                 print("Error decoding JSON: \(error)")
