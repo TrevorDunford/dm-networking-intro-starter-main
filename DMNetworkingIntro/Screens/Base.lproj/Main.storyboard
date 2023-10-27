@@ -42,7 +42,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="UITableView" destination="Usc-Xl-Ocu" id="Odg-lc-F3F"/>
+                        <outlet property="usersTableView" destination="Usc-Xl-Ocu" id="sl8-AF-sn6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

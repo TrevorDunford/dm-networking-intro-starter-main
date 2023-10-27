@@ -31,10 +31,8 @@ class NetworkManager {
     func getUsers() {
         // 3.3 Append the "/users" endpoint to the base URL and store the result in a variable. You should end up with this String: "https://reqres.in/api/users".
         let endpoint = baseUrl + "users"
-        let urlString = "https://reqres.in/api/users"
-
         // 3.3 Create a `URL` object from the String. If the `URL` is nil, break out of the function.
-        guard let url = URL(string: urlString) else {
+        guard let url = URL(string: endpoint) else {
             return
         }
         

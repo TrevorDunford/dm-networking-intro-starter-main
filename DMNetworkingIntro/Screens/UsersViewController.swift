@@ -20,30 +20,34 @@ class UsersViewController: UIViewController, UITableViewDataSource, NetworkManag
      4. Create a variable called `users` and set it to an empty array of `User` objects.
      */
     var users: [User] = []
-    func getUsers() {
-        NetworkManager.shared.getUsers()
-    }
+    
     /**
      5. Connect the UITableView to the code. Create a function called `configureTableView` that configures the table view. You may find the `Constants` file helpful. Make sure to call the function in the appropriate spot.
      */
     
-    @IBOutlet weak var UITableView: UITableView!
+    @IBOutlet weak var usersTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         getUsers()
+        configureTableView()
     }
     
     func configureTableView() {
-        UITableView.dataSource = self
-        UITableView.delegate = self
-        UITableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.userReuseID)    }
+        usersTableView.dataSource = self
+        usersTableView.delegate = self
+    }
+    
+    func getUsers() {
+        NetworkManager.shared.getUsers()
+        NetworkManager.shared.delegate = self
+    }
    
     func usersRetrieved(users: [User]) {
-        self.users = users //
+        self.users = users
 
                DispatchQueue.main.async {
-                   self.UITableView.reloadData()
+                   self.usersTableView.reloadData()
                    }
         
            }
@@ -54,6 +58,12 @@ class UsersViewController: UIViewController, UITableViewDataSource, NetworkManag
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.userReuseID, for: indexPath)
+        let user = users[indexPath.row]
+        var content = cell.defaultContentConfiguration()
+        content.text = user.firstName
+        content.secondaryText = user.lastName
+        content.secondaryText = user.email
+        cell.contentConfiguration = content
         return cell
     }
     /**
